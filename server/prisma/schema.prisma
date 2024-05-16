@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @default(autoincrement()) @id
+  email String  @unique
+  name  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum IngredientType {
+  FRUIT
+  VEGETABLE
+  GRAIN
+  MEAT
+  FLAVOURING
+  OTHER
+}
+
+model Ingredient {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  type IngredientType
+  recipes Recipe[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+enum RecipeType {
+  VEGETABLE
+  MEAT
+  VEGETABLE_AND_MEAT
+  FRUIT
+  GRAIN
+}
+
+model Recipe {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  type RecipeType
+  ingredients Ingredient[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model App {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+enum SystemMenuType {
+  MENU
+  SUBMENU
+  BUTTON
+}
+
+enum SystemMenuStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model SystemMenu {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  parentId Int @default(0)
+  displayOrder Int
+  path String?
+  route String?
+  queryString String?
+  isOuterLink Boolean
+  type SystemMenuType
+  visible Boolean
+  status SystemMenuStatus
+  permissionTag String @default("")
+  icon String @default("")
+  creatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
