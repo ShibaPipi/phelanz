@@ -1,0 +1,9 @@
+{
+  "name": "phelanz",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:fe-admin": "cd ./fe-admin && pnpm dev",
+    "debug:server": "cd ./server && pnpm start:debug"
+  }
+}
