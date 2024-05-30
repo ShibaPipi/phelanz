@@ -8,7 +8,8 @@ import { IngredientModule } from './module/fit/ingredients/ingredients.module';
 import { RecipeModule } from './module/fit/recipes/recipes.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppModule as SystemAppModule } from './module/system/apps/apps.module';
-import { MenusModule } from './module/system/menus/menus.module';
+import { SystemMenuModule } from './module/system/menus/menus.module';
+import { BannerModule } from './module/cms/banners/banners.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { MenusModule } from './module/system/menus/menus.module';
     IngredientModule,
     RecipeModule,
     SystemAppModule,
-    MenusModule,
+    SystemMenuModule,
+    BannerModule,
   ],
   controllers: [AppController],
   providers: [
