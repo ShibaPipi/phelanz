@@ -19,8 +19,7 @@ import routerBindings, {
 import dataProvider from '@refinedev/simple-rest';
 import { App as AntdApp } from 'antd';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { AppIcon } from './components/app-icon';
-import { Header } from './components/header';
+import { AppIcon, Header } from './components';
 import { ColorModeContextProvider } from './contexts/color-mode';
 import {
   BlogPostCreate,
@@ -61,11 +60,26 @@ import {
   SystemMenuStore,
   SystemMenuShow,
 } from './pages/system/menus';
+import {
+  CmsBannerList,
+  CmsBannerShow,
+  CmsBannerStore,
+} from './pages/cms/banners';
 
 function App() {
   const [resources, setResources] = useState<ResourceProps[]>([]);
   useMount(() => {
     setResources([
+      {
+        name: 'cms_banners',
+        list: '/cms-banners',
+        create: '/cms-banners/create',
+        edit: '/cms-banners/edit/:id',
+        show: '/cms-banners/show/:id',
+        meta: {
+          label: 'Banners',
+        },
+      },
       {
         name: 'fit_recipes',
         list: '/fit-recipes',
@@ -200,6 +214,12 @@ function App() {
                       index
                       element={<NavigateToResource resource="blog_posts" />}
                     />
+                    <Route path="/cms-banners">
+                      <Route index element={<CmsBannerList />} />
+                      <Route path="create" element={<CmsBannerStore />} />
+                      <Route path="edit/:id" element={<CmsBannerStore />} />
+                      <Route path="show/:id" element={<CmsBannerShow />} />
+                    </Route>
                     <Route path="/blog-posts">
                       <Route index element={<BlogPostList />} />
                       <Route path="create" element={<BlogPostCreate />} />
