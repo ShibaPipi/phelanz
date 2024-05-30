@@ -7,4 +7,4 @@ import { SystemMenuService } from './menus.service';
   controllers: [SystemMenuController],
   providers: [PrismaService, SystemMenuService],
 })
-export class MenusModule {}
+export class SystemMenuModule {}
