@@ -96,11 +96,22 @@ model SystemMenu {
 
 model Banner {
   id Int @default(autoincrement()) @id
-  name String @unique
+  title String?
   image String @default("")
   description String?
   status Boolean @default(true)
   url String?
+  creatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Introduction {
+  id Int @default(autoincrement()) @id
+  title String
+  image String @default("")
+  description String
+  status Boolean @default(true)
   creatorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())

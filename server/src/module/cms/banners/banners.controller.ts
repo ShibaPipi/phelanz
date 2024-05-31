@@ -32,7 +32,7 @@ export class BannerController {
   ): Promise<void> {
     const totalCount = await this.bannerService.countBanners(listParams);
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');
-    res.header('X-Total-Count', `$${{ totalCount }}`);
+    res.header('X-Total-Count', `${totalCount}`);
     res.json(await this.bannerService.banners(listParams));
   }
 

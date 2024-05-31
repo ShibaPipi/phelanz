@@ -13,3 +13,6 @@ export const relationDifferenceByIds = (
 
   return { connect, disconnect };
 };
+
+export const getImageFullUrl = (path: string) =>
+  path.replace('public', process.env.APP_URL);

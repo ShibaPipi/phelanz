@@ -35,7 +35,7 @@ export class BannerService {
   }
 
   async createBanner(data: Prisma.BannerCreateInput): Promise<Banner> {
-    return this.prisma.banner.create({ data });
+    return this.prisma.banner.create({ data: { ...data, creatorId: 1 } });
   }
 
   async updateBanner({
