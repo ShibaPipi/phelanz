@@ -65,6 +65,11 @@ import {
   CmsBannerShow,
   CmsBannerStore,
 } from './pages/cms/banners';
+import {
+  CmsIntroductionList,
+  CmsIntroductionShow,
+  CmsIntroductionStore,
+} from './pages/cms/introductions';
 
 function App() {
   const [resources, setResources] = useState<ResourceProps[]>([]);
@@ -78,6 +83,16 @@ function App() {
         show: '/cms-banners/show/:id',
         meta: {
           label: 'Banners',
+        },
+      },
+      {
+        name: 'cms_introductions',
+        list: '/cms-introductions',
+        create: '/cms-introductions/create',
+        edit: '/cms-introductions/edit/:id',
+        show: '/cms-introductions/show/:id',
+        meta: {
+          label: 'Introductions',
         },
       },
       {
@@ -214,6 +229,18 @@ function App() {
                       index
                       element={<NavigateToResource resource="blog_posts" />}
                     />
+                    <Route path="/cms-introductions">
+                      <Route index element={<CmsIntroductionList />} />
+                      <Route path="create" element={<CmsIntroductionStore />} />
+                      <Route
+                        path="edit/:id"
+                        element={<CmsIntroductionStore />}
+                      />
+                      <Route
+                        path="show/:id"
+                        element={<CmsIntroductionShow />}
+                      />
+                    </Route>
                     <Route path="/cms-banners">
                       <Route index element={<CmsBannerList />} />
                       <Route path="create" element={<CmsBannerStore />} />

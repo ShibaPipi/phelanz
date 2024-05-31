@@ -2,60 +2,90 @@ import { Upload, Form, UploadFile, UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { useMemoizedFn } from 'ahooks';
+import { UploadChangeParam } from 'antd/es/upload';
+import { UploadFileResponse } from 'models';
+
+type UploadFileWithResponse = UploadFile<UploadFileResponse>;
 
 interface Props {
-  value?: UploadFile[];
+  initialValues?: string[];
+  required?: boolean;
   label: ComponentProps<typeof Form.Item>['label'];
   name: ComponentProps<typeof Form.Item>['name'];
-  onSuccess: () => void;
+  onSuccess: (info: UploadChangeParam<UploadFileWithResponse>) => void;
+  onRemove: (file: UploadFileWithResponse) => void;
 }
 
 export const FileUploadForm: FC<Props> = ({
-  value = [],
+  initialValues,
+  required = true,
   label,
   name,
   onSuccess,
+  onRemove,
 }) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const handleChange: UploadProps['onChange'] = useMemoizedFn((info) => {
-    let newFileList = [...info.fileList];
+  const [initialized, setInitialized] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile<UploadFileResponse>[]>(
+    [],
+  );
+  const handleChange: UploadProps['onChange'] = useMemoizedFn(
+    (info: UploadChangeParam<UploadFileWithResponse>) => {
+      console.log('info => ', info);
+      let newFileList = [...info.fileList];
 
-    // Read from response and show file link
-    newFileList = newFileList.map((file) => {
-      if (file.response) {
-        // Component will show file.url as link
-        file.url = file.response.url;
-      }
-      return file;
-    });
+      // Read from response and show file link
+      newFileList = newFileList.map((file) => {
+        if (file.response) {
+          // Component will show file.url as link
+          file.url = file.response.url;
+        }
+        return file;
+      });
 
-    setFileList(newFileList);
-  });
+      setFileList(newFileList);
+
+      onSuccess(info);
+    },
+  );
 
   useEffect(() => {
-    if (fileList?.length === 0 && value?.length > 0) {
+    if (!initialValues) return;
+    if (!initialized && fileList.length === 0 && initialValues?.length > 0) {
+      setInitialized(true);
       setFileList(
-        value.map(
-          ({ url }, index) =>
+        initialValues.map(
+          (src, index) =>
             ({
               uid: `${index}`,
               name: 'image.png',
               status: 'done',
-              fileUrl: url,
+              url: src,
             }) as UploadFile,
         ),
       );
     }
-  }, [fileList, value, setFileList]);
+  }, [fileList.length, initialValues, initialized]);
 
   return (
-    <Form.Item label={label} name={name}>
+    <Form.Item
+      label={label}
+      name={name}
+      rules={[
+        {
+          required,
+        },
+      ]}
+    >
       <Upload.Dragger
         maxCount={1}
-        action="/file/upload"
+        action={`${import.meta.env.VITE_DATA_PROVIDER_URL}/file/upload`}
         fileList={fileList}
         onChange={handleChange}
-        showUploadList={false}
+        listType="picture-card"
+        onRemove={(file) => {
+          setFileList([]);
+          onRemove(file);
+        }}
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
