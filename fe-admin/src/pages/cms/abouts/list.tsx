@@ -9,6 +9,7 @@ import {
 } from '@refinedev/antd';
 import { BaseRecord, useResource } from '@refinedev/core';
 import { Image, Space, Table } from 'antd';
+import { TagStatusBoolean } from 'components';
 
 export const CmsAboutList = () => {
   const { tableProps } = useTable({
@@ -37,7 +38,12 @@ export const CmsAboutList = () => {
           }}
         />
         <Table.Column dataIndex="type" title={'Type'} />
-        <Table.Column dataIndex="status" title={'Status'} />
+        <Table.Column
+          title={'Status'}
+          render={(_, { status }: BaseRecord) => (
+            <TagStatusBoolean status={status} />
+          )}
+        />
         <Table.Column
           dataIndex={['createdAt']}
           title={'Created at'}

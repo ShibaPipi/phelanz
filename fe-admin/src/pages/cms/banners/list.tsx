@@ -6,7 +6,8 @@ import {
   useTable,
 } from '@refinedev/antd';
 import { BaseRecord, useResource } from '@refinedev/core';
-import { Image, Space, Table, Tag } from 'antd';
+import { Image, Space, Table } from 'antd';
+import { TagStatusBoolean } from 'components';
 
 export const CmsBannerList = () => {
   const { resource } = useResource();
@@ -27,9 +28,7 @@ export const CmsBannerList = () => {
         <Table.Column
           title={'Status'}
           render={(_, { status }: BaseRecord) => (
-            <Tag color={status ? 'green' : 'orange'}>
-              {status ? 'ON' : 'OFF'}
-            </Tag>
+            <TagStatusBoolean status={status} />
           )}
         />
         <Table.Column dataIndex="createdAt" title={'Created At'} />

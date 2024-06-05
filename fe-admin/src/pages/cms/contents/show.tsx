@@ -7,6 +7,7 @@ import {
 } from '@refinedev/antd';
 import { useOne, useShow } from '@refinedev/core';
 import { Typography } from 'antd';
+import { ShowCategory, ShowContent, ShowDate, ShowId, ShowStatus, ShowTitle } from 'components';
 
 const { Title } = Typography;
 
@@ -26,22 +27,16 @@ export const CmsContentShow = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>{'ID'}</Title>
-      <NumberField value={record?.id ?? ''} />
-      <Title level={5}>{'Title'}</Title>
-      <TextField value={record?.title} />
-      <Title level={5}>{'Content'}</Title>
-      <MarkdownField value={record?.content} />
-      <Title level={5}>{'Category'}</Title>
-      <TextField
+      <ShowId value={record?.id ?? ''} />
+      <ShowTitle value={record?.title} />
+      <ShowContent value={record?.content} />
+      <ShowCategory
         value={
           categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.title}</>
         }
       />
-      <Title level={5}>{'Status'}</Title>
-      <TextField value={record?.status} />
-      <Title level={5}>{'CreatedAt'}</Title>
-      <DateField value={record?.createdAt} />
+      <ShowStatus value={record?.status} />
+      <ShowDate label={'Created At'} value={record?.createdAt} />
     </Show>
   );
 };

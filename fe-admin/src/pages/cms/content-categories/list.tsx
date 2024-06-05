@@ -6,7 +6,8 @@ import {
   useTable,
 } from '@refinedev/antd';
 import { BaseRecord } from '@refinedev/core';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table } from 'antd';
+import { TagStatusBoolean } from 'components';
 
 export const CmsContentCategoryList = () => {
   const { tableProps } = useTable({
@@ -21,9 +22,7 @@ export const CmsContentCategoryList = () => {
         <Table.Column
           title={'Status'}
           render={(_, { status }: BaseRecord) => (
-            <Tag color={status ? 'green' : 'orange'}>
-              {status ? 'ON' : 'OFF'}
-            </Tag>
+            <TagStatusBoolean status={status} />
           )}
         />
         <Table.Column

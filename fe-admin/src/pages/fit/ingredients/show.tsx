@@ -1,8 +1,6 @@
-import { NumberField, Show, TextField } from '@refinedev/antd';
+import { Show } from '@refinedev/antd';
 import { useShow } from '@refinedev/core';
-import { Typography } from 'antd';
-
-const { Title } = Typography;
+import { ShowId, ShowName } from 'components';
 
 export const FitIngredientShow = () => {
   const { queryResult } = useShow({});
@@ -12,10 +10,8 @@ export const FitIngredientShow = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>{'ID'}</Title>
-      <NumberField value={record?.id ?? ''} />
-      <Title level={5}>{'Name'}</Title>
-      <TextField value={record?.name} />
+      <ShowId value={record?.id ?? ''} />
+      <ShowName value={record?.name} />
     </Show>
   );
 };

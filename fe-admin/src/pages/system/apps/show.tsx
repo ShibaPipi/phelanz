@@ -1,6 +1,7 @@
-import { NumberField, Show, TextField } from '@refinedev/antd';
+import { Show } from '@refinedev/antd';
 import { useShow } from '@refinedev/core';
 import { Typography } from 'antd';
+import { ShowDescription, ShowId, ShowName } from 'components';
 
 const { Title } = Typography;
 
@@ -12,12 +13,10 @@ export const SystemAppShow = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>{'ID'}</Title>
-      <NumberField value={record?.id ?? ''} />
-      <Title level={5}>{'Name'}</Title>
-      <TextField value={record?.name} />
+      <ShowId value={record?.id ?? ''} />
+      <ShowName value={record?.name} />
       <Title level={5}>{'Description'}</Title>
-      <TextField value={record?.description} />
+      <ShowDescription value={record?.description} />
     </Show>
   );
 };

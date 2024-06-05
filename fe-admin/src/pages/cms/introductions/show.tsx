@@ -1,8 +1,12 @@
-import { NumberField, Show, TextField } from '@refinedev/antd';
+import { Show } from '@refinedev/antd';
 import { useShow } from '@refinedev/core';
-import { Image, Typography } from 'antd';
-
-const { Title } = Typography;
+import {
+  ShowDescription,
+  ShowId,
+  ShowImage,
+  ShowStatusBoolean,
+  ShowTitle,
+} from 'components';
 
 export const CmsIntroductionShow = () => {
   const { queryResult } = useShow({});
@@ -12,16 +16,11 @@ export const CmsIntroductionShow = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>{'ID'}</Title>
-      <NumberField value={record?.id ?? ''} />
-      <Title level={5}>{'Image'}</Title>
-      <Image src={record?.image_src} height={360} />
-      <Title level={5}>{'Title'}</Title>
-      <TextField value={record?.title} />
-      <Title level={5}>{'Description'}</Title>
-      <TextField value={record?.description} />
-      <Title level={5}>{'Status'}</Title>
-      <TextField value={record?.status} />
+      <ShowId value={record?.id ?? ''} />
+      <ShowImage src={record?.image_src} height={360} />
+      <ShowTitle value={record?.title} />
+      <ShowDescription value={record?.description} />
+      <ShowStatusBoolean value={record?.status} />
     </Show>
   );
 };

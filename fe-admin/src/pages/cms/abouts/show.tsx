@@ -1,14 +1,14 @@
-import {
-  DateField,
-  MarkdownField,
-  NumberField,
-  Show,
-  TextField,
-} from '@refinedev/antd';
+import { Show } from '@refinedev/antd';
 import { useShow } from '@refinedev/core';
-import { Image, Typography } from 'antd';
-
-const { Title } = Typography;
+import {
+  ShowContent,
+  ShowDate,
+  ShowId,
+  ShowImage,
+  ShowStatusBoolean,
+  ShowTitle,
+  ShowType,
+} from 'components';
 
 export const CmsAboutShow = () => {
   const { queryResult } = useShow({});
@@ -18,20 +18,13 @@ export const CmsAboutShow = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>{'ID'}</Title>
-      <NumberField value={record?.id ?? ''} />
-      <Title level={5}>{'Title'}</Title>
-      <TextField value={record?.title} />
-      <Title level={5}>{'Image'}</Title>
-      <Image src={record?.image_src} height={360} />
-      <Title level={5}>{'Content'}</Title>
-      <MarkdownField value={record?.content} />
-      <Title level={5}>{'Type'}</Title>
-      <TextField value={record?.type} />
-      <Title level={5}>{'Status'}</Title>
-      <TextField value={record?.status} />
-      <Title level={5}>{'CreatedAt'}</Title>
-      <DateField value={record?.createdAt} />
+      <ShowId value={record?.id ?? ''} />
+      <ShowTitle value={record?.title} />
+      <ShowImage src={record?.image_src} height={360} />
+      <ShowContent value={record?.content} />
+      <ShowType value={record?.type} />
+      <ShowStatusBoolean value={record?.status} />
+      <ShowDate label={'Created At'} value={record?.createdAt} />
     </Show>
   );
 };
