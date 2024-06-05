@@ -70,11 +70,27 @@ import {
   CmsIntroductionShow,
   CmsIntroductionStore,
 } from './pages/cms/introductions';
+import {
+  CmsContentCategoryList,
+  CmsContentCategoryShow,
+  CmsContentCategoryStore,
+} from './pages/cms/content-categories';
+import {
+  CmsContentList,
+  CmsContentShow,
+  CmsContentStore,
+} from './pages/cms/contents';
 
 function App() {
   const [resources, setResources] = useState<ResourceProps[]>([]);
   useMount(() => {
     setResources([
+      {
+        name: 'home',
+        meta: {
+          label: 'Home',
+        },
+      },
       {
         name: 'cms_banners',
         list: '/cms-banners',
@@ -83,6 +99,7 @@ function App() {
         show: '/cms-banners/show/:id',
         meta: {
           label: 'Banners',
+          parent: 'home',
         },
       },
       {
@@ -93,6 +110,41 @@ function App() {
         show: '/cms-introductions/show/:id',
         meta: {
           label: 'Introductions',
+          parent: 'home',
+        },
+      },
+      {
+        name: 'content_mgmt',
+        meta: {
+          label: 'Content Mgmt',
+        },
+      },
+      {
+        name: 'cms_content_categories',
+        list: '/cms-content-categories',
+        create: '/cms-content-categories/create',
+        edit: '/cms-content-categories/edit/:id',
+        show: '/cms-content-categories/show/:id',
+        meta: {
+          label: 'Content Categories',
+          parent: 'content_mgmt',
+        },
+      },
+      {
+        name: 'cms_contents',
+        list: '/cms-contents',
+        create: '/cms-contents/create',
+        edit: '/cms-contents/edit/:id',
+        show: '/cms-contents/show/:id',
+        meta: {
+          label: 'Contents',
+          parent: 'content_mgmt',
+        },
+      },
+      {
+        name: 'fit',
+        meta: {
+          label: 'Fitness',
         },
       },
       {
@@ -103,6 +155,7 @@ function App() {
         show: '/fit-recipes/show/:id',
         meta: {
           label: 'Recipes',
+          parent: 'fit',
         },
       },
       {
@@ -113,6 +166,7 @@ function App() {
         show: '/fit-ingredients/show/:id',
         meta: {
           label: 'Ingredients',
+          parent: 'fit',
         },
       },
       {
@@ -246,6 +300,27 @@ function App() {
                       <Route path="create" element={<CmsBannerStore />} />
                       <Route path="edit/:id" element={<CmsBannerStore />} />
                       <Route path="show/:id" element={<CmsBannerShow />} />
+                    </Route>
+                    <Route path="/cms-content-categories">
+                      <Route index element={<CmsContentCategoryList />} />
+                      <Route
+                        path="create"
+                        element={<CmsContentCategoryStore />}
+                      />
+                      <Route
+                        path="edit/:id"
+                        element={<CmsContentCategoryStore />}
+                      />
+                      <Route
+                        path="show/:id"
+                        element={<CmsContentCategoryShow />}
+                      />
+                    </Route>
+                    <Route path="/cms-contents">
+                      <Route index element={<CmsContentList />} />
+                      <Route path="create" element={<CmsContentStore />} />
+                      <Route path="edit/:id" element={<CmsContentStore />} />
+                      <Route path="show/:id" element={<CmsContentShow />} />
                     </Route>
                     <Route path="/blog-posts">
                       <Route index element={<BlogPostList />} />

@@ -13,20 +13,6 @@ export const CmsBannerStore = () => {
   return (
     <Wrapper saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
-        <Form.Item
-          label={'Name'}
-          name={['name']}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item label={'URL'} name={['url']}>
-          <Input />
-        </Form.Item>
         <FileUploadForm
           initialValues={
             queryResult?.data?.data.image_src
@@ -40,6 +26,12 @@ export const CmsBannerStore = () => {
           }
           onRemove={() => form.setFieldValue('image', '')}
         />
+        <Form.Item label={'Name'} name={['name']}>
+          <Input />
+        </Form.Item>
+        <Form.Item label={'URL'} name={['url']}>
+          <Input />
+        </Form.Item>
         <Form.Item label={'Description'} name={['description']}>
           <Input />
         </Form.Item>
