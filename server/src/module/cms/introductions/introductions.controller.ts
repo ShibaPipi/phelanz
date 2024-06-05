@@ -8,53 +8,55 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { IntroductionService } from './introductions.service';
-import { Introduction } from '@prisma/client';
+import { CmsIntroductionService } from './introductions.service';
+import { CmsIntroduction } from '@prisma/client';
 import { ListParams } from 'src/common/decorators';
 import { Response } from 'express';
 
-type StoreData = Omit<Introduction, 'id' | 'createdAt' | 'updatedAt'>;
+type StoreData = Omit<CmsIntroduction, 'id' | 'createdAt' | 'updatedAt'>;
 
 @Controller('cms_introductions')
-export class IntroductionController {
-  constructor(private readonly introductionService: IntroductionService) {}
+export class CmsIntroductionController {
+  constructor(
+    private readonly cmsIntroductionService: CmsIntroductionService,
+  ) {}
 
   @Post()
-  async createIntroduction(@Body() data: StoreData): Promise<Introduction> {
-    return this.introductionService.createIntroduction(data);
+  async createIntroduction(@Body() data: StoreData): Promise<CmsIntroduction> {
+    return this.cmsIntroductionService.createIntroduction(data);
   }
 
   @Get()
   async all(
     @ListParams()
-    listParams: Parameters<typeof this.introductionService.introductions>[0],
+    listParams: Parameters<typeof this.cmsIntroductionService.introductions>[0],
     @Res() res: Response,
   ): Promise<void> {
     const totalCount =
-      await this.introductionService.countIntroductions(listParams);
+      await this.cmsIntroductionService.countIntroductions(listParams);
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');
     res.header('X-Total-Count', `${totalCount}`);
-    res.json(await this.introductionService.introductions(listParams));
+    res.json(await this.cmsIntroductionService.introductions(listParams));
   }
 
   @Get(':id')
-  async show(@Param('id') id: string): Promise<Introduction> {
-    return this.introductionService.introduction({ id: +id });
+  async show(@Param('id') id: string): Promise<CmsIntroduction> {
+    return this.cmsIntroductionService.introduction({ id: +id });
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: string,
     @Body() data: StoreData,
-  ): Promise<Introduction> {
-    return this.introductionService.updateIntroduction({
+  ): Promise<CmsIntroduction> {
+    return this.cmsIntroductionService.updateIntroduction({
       data,
       where: { id: +id },
     });
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Introduction> {
-    return this.introductionService.deleteIntroduction({ id: +id });
+  async delete(@Param('id') id: string): Promise<CmsIntroduction> {
+    return this.cmsIntroductionService.deleteIntroduction({ id: +id });
   }
 }

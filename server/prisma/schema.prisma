@@ -94,7 +94,7 @@ model SystemMenu {
   updatedAt DateTime @updatedAt @default(now())
 }
 
-model Banner {
+model CmsBanner {
   id Int @default(autoincrement()) @id
   title String?
   image String @default("")
@@ -106,12 +106,44 @@ model Banner {
   updatedAt DateTime @updatedAt @default(now())
 }
 
-model Introduction {
+model CmsIntroduction {
   id Int @default(autoincrement()) @id
   title String
   image String @default("")
   description String
   status Boolean @default(true)
+  creatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model CmsContentCategory {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  parentId Int @default(0)
+  displayOrder Int
+  status Boolean @default(true)
+  creatorId Int
+  contents CmsContent[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+enum CmsContentStatus {
+  DRAFT
+  PUBLISHED
+  REJECTED
+}
+
+model CmsContent {
+  id Int @default(autoincrement()) @id
+  title String
+  displayOrder Int
+  content String
+  image String @default("")
+  status CmsContentStatus
+  contentCategoryId Int
+  category CmsContentCategory @relation(fields: [contentCategoryId], references: [id])
   creatorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())

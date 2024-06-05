@@ -42,7 +42,7 @@ export class SystemMenuService {
     return this.prisma.systemMenu.create({
       data: {
         ...data,
-        creatorId: 1,
+        creatorId: 1, // TODO: remove hardcode
       },
     });
   }

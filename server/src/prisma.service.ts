@@ -1,30 +1,30 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Banner, PrismaClient } from '@prisma/client';
+import { CmsBanner, PrismaClient } from '@prisma/client';
 import { getImageFullUrl } from './common/utils';
-import { result } from 'lodash';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     super();
 
+    const modelsHasImage = ['Banner', 'Introduction', 'Content'];
     // add image full url
     this.$use(async (params, next) => {
       const result = await next(params);
       if (
-        ['Banner', 'Introduction'].includes(params.model) &&
+        modelsHasImage.includes(params.model) &&
         params.action === 'findUnique'
       ) {
-        result.image_src = getImageFullUrl(result.image);
+        result.image_src = result.image ? getImageFullUrl(result.image) : null;
         return result;
       }
       if (
-        ['Banner', 'Introduction'].includes(params.model) &&
+        modelsHasImage.includes(params.model) &&
         params.action === 'findMany'
       ) {
-        return result.map((banner: Banner) => ({
+        return result.map((banner: CmsBanner) => ({
           ...banner,
-          image_src: getImageFullUrl(banner.image),
+          image_src: banner.image ? getImageFullUrl(banner.image) : null,
         }));
       }
       return result;

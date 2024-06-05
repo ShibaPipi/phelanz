@@ -11,9 +11,11 @@ import { RecipeModule } from './module/fit/recipes/recipes.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppModule as SystemAppModule } from './module/system/apps/apps.module';
 import { SystemMenuModule } from './module/system/menus/menus.module';
-import { BannerModule } from './module/cms/banners/banners.module';
+import { CmsBannerModule } from './module/cms/banners/banners.module';
 import { UploadModule } from './module/file/upload/upload.module';
-import { IntroductionModule } from './module/cms/introductions/introductions.module';
+import { CmsIntroductionModule } from './module/cms/introductions/introductions.module';
+import { CmsContentCategoryModule } from './module/cms/content-categories/content-categories.module';
+import { CmsContentModule } from './module/cms/contents/contents.module';
 
 @Module({
   imports: [
@@ -35,8 +37,10 @@ import { IntroductionModule } from './module/cms/introductions/introductions.mod
     RecipeModule,
     SystemAppModule,
     SystemMenuModule,
-    BannerModule,
-    IntroductionModule,
+    CmsBannerModule,
+    CmsIntroductionModule,
+    CmsContentCategoryModule,
+    CmsContentModule,
     UploadModule,
   ],
   controllers: [AppController],

@@ -30,7 +30,6 @@ export const CreateBody = createParamDecorator((_, ctx: ExecutionContext) => {
 
     delete params.relations;
   }
-  console.log('params => ', JSON.stringify(params))
 
   return params;
 });

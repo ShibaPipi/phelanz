@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Banner } from '@prisma/client';
+import { Prisma, CmsBanner } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class BannerService {
+export class CmsBannerService {
   constructor(private prisma: PrismaService) {}
 
-  async banner(where: Prisma.BannerWhereUniqueInput): Promise<Banner | null> {
-    return this.prisma.banner.findUnique({
+  async banner(
+    where: Prisma.CmsBannerWhereUniqueInput,
+  ): Promise<CmsBanner | null> {
+    return this.prisma.cmsBanner.findUnique({
       where,
     });
   }
@@ -21,11 +23,11 @@ export class BannerService {
   }: {
     skip?: number;
     take?: number;
-    cursor?: Prisma.BannerWhereUniqueInput;
-    where?: Prisma.BannerWhereInput;
-    orderBy: Prisma.BannerOrderByWithRelationInput;
-  }): Promise<Banner[]> {
-    return this.prisma.banner.findMany({
+    cursor?: Prisma.CmsBannerWhereUniqueInput;
+    where?: Prisma.CmsBannerWhereInput;
+    orderBy: Prisma.CmsBannerOrderByWithRelationInput;
+  }): Promise<CmsBanner[]> {
+    return this.prisma.cmsBanner.findMany({
       skip,
       take,
       cursor,
@@ -34,32 +36,34 @@ export class BannerService {
     });
   }
 
-  async createBanner(data: Prisma.BannerCreateInput): Promise<Banner> {
-    return this.prisma.banner.create({ data: { ...data, creatorId: 1 } });
+  async createBanner(data: Prisma.CmsBannerCreateInput): Promise<CmsBanner> {
+    return this.prisma.cmsBanner.create({ data: { ...data, creatorId: 1 } }); // TODO: remove hardcode
   }
 
   async updateBanner({
     data,
     where,
   }: {
-    where: Prisma.BannerWhereUniqueInput;
-    data: Prisma.BannerUpdateInput;
-  }): Promise<Banner> {
-    return this.prisma.banner.update({ data, where });
+    where: Prisma.CmsBannerWhereUniqueInput;
+    data: Prisma.CmsBannerUpdateInput;
+  }): Promise<CmsBanner> {
+    return this.prisma.cmsBanner.update({ data, where });
   }
 
-  async deleteBanner(where: Prisma.BannerWhereUniqueInput): Promise<Banner> {
-    return this.prisma.banner.delete({ where });
+  async deleteBanner(
+    where: Prisma.CmsBannerWhereUniqueInput,
+  ): Promise<CmsBanner> {
+    return this.prisma.cmsBanner.delete({ where });
   }
 
   async countBanners({
     cursor,
     where,
   }: {
-    cursor?: Prisma.BannerWhereUniqueInput;
-    where?: Prisma.BannerWhereInput;
+    cursor?: Prisma.CmsBannerWhereUniqueInput;
+    where?: Prisma.CmsBannerWhereInput;
   }): Promise<number> {
-    return await this.prisma.banner.count({
+    return await this.prisma.cmsBanner.count({
       where,
       cursor,
     });

@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Introduction, Prisma } from '@prisma/client';
+import { CmsIntroduction, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class IntroductionService {
+export class CmsIntroductionService {
   constructor(private prisma: PrismaService) {}
 
   async introduction(
-    where: Prisma.IntroductionWhereUniqueInput,
-  ): Promise<Introduction | null> {
-    return this.prisma.introduction.findUnique({
+    where: Prisma.CmsIntroductionWhereUniqueInput,
+  ): Promise<CmsIntroduction | null> {
+    return this.prisma.cmsIntroduction.findUnique({
       where,
     });
   }
@@ -23,11 +23,11 @@ export class IntroductionService {
   }: {
     skip?: number;
     take?: number;
-    cursor?: Prisma.IntroductionWhereUniqueInput;
-    where?: Prisma.IntroductionWhereInput;
-    orderBy: Prisma.IntroductionOrderByWithRelationInput;
-  }): Promise<Introduction[]> {
-    return this.prisma.introduction.findMany({
+    cursor?: Prisma.CmsIntroductionWhereUniqueInput;
+    where?: Prisma.CmsIntroductionWhereInput;
+    orderBy: Prisma.CmsIntroductionOrderByWithRelationInput;
+  }): Promise<CmsIntroduction[]> {
+    return this.prisma.cmsIntroduction.findMany({
       skip,
       take,
       cursor,
@@ -37,35 +37,37 @@ export class IntroductionService {
   }
 
   async createIntroduction(
-    data: Prisma.IntroductionCreateInput,
-  ): Promise<Introduction> {
-    return this.prisma.introduction.create({ data: { ...data, creatorId: 1 } });
+    data: Prisma.CmsIntroductionCreateInput,
+  ): Promise<CmsIntroduction> {
+    return this.prisma.cmsIntroduction.create({
+      data: { ...data, creatorId: 1 },
+    }); // TODO: remove hardcode
   }
 
   async updateIntroduction({
     data,
     where,
   }: {
-    where: Prisma.IntroductionWhereUniqueInput;
-    data: Prisma.IntroductionUpdateInput;
-  }): Promise<Introduction> {
-    return this.prisma.introduction.update({ data, where });
+    where: Prisma.CmsIntroductionWhereUniqueInput;
+    data: Prisma.CmsIntroductionUpdateInput;
+  }): Promise<CmsIntroduction> {
+    return this.prisma.cmsIntroduction.update({ data, where });
   }
 
   async deleteIntroduction(
-    where: Prisma.IntroductionWhereUniqueInput,
-  ): Promise<Introduction> {
-    return this.prisma.introduction.delete({ where });
+    where: Prisma.CmsIntroductionWhereUniqueInput,
+  ): Promise<CmsIntroduction> {
+    return this.prisma.cmsIntroduction.delete({ where });
   }
 
   async countIntroductions({
     cursor,
     where,
   }: {
-    cursor?: Prisma.IntroductionWhereUniqueInput;
-    where?: Prisma.IntroductionWhereInput;
+    cursor?: Prisma.CmsIntroductionWhereUniqueInput;
+    where?: Prisma.CmsIntroductionWhereInput;
   }): Promise<number> {
-    return await this.prisma.introduction.count({
+    return await this.prisma.cmsIntroduction.count({
       where,
       cursor,
     });
