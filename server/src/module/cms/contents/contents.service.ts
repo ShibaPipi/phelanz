@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma.service';
 export class CmsContentService {
   constructor(private prisma: PrismaService) {}
 
-  async content(
+  async cmsContent(
     where: Prisma.CmsContentWhereUniqueInput,
   ): Promise<CmsContent | null> {
     return this.prisma.cmsContent.findUnique({
@@ -14,7 +14,7 @@ export class CmsContentService {
     });
   }
 
-  async contents({
+  async cmsContents({
     skip,
     take,
     cursor,
@@ -36,7 +36,7 @@ export class CmsContentService {
     });
   }
 
-  async createContent(
+  async createCmsContent(
     data: Prisma.CmsContentUncheckedCreateInput,
   ): Promise<CmsContent> {
     return this.prisma.cmsContent.create({
@@ -44,7 +44,7 @@ export class CmsContentService {
     });
   }
 
-  async updateContent({
+  async updateCmsContent({
     data,
     where,
   }: {
@@ -54,13 +54,13 @@ export class CmsContentService {
     return this.prisma.cmsContent.update({ data, where });
   }
 
-  async deleteContent(
+  async deleteCmsContent(
     where: Prisma.CmsContentWhereUniqueInput,
   ): Promise<CmsContent> {
     return this.prisma.cmsContent.delete({ where });
   }
 
-  async countContents({
+  async countCmsContents({
     cursor,
     where,
   }: {

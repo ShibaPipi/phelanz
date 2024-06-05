@@ -16,6 +16,7 @@ import { UploadModule } from './module/file/upload/upload.module';
 import { CmsIntroductionModule } from './module/cms/introductions/introductions.module';
 import { CmsContentCategoryModule } from './module/cms/content-categories/content-categories.module';
 import { CmsContentModule } from './module/cms/contents/contents.module';
+import { CmsAboutModule } from './module/cms/abouts/abouts.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CmsContentModule } from './module/cms/contents/contents.module';
     CmsIntroductionModule,
     CmsContentCategoryModule,
     CmsContentModule,
+    CmsAboutModule,
     UploadModule,
   ],
   controllers: [AppController],

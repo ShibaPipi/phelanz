@@ -7,7 +7,12 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     super();
 
-    const modelsHasImage = ['Banner', 'Introduction', 'Content'];
+    const modelsHasImage = [
+      'CmsBanner',
+      'CmsIntroduction',
+      'CmsContent',
+      'CmsAbout',
+    ];
     // add image full url
     this.$use(async (params, next) => {
       const result = await next(params);

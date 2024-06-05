@@ -139,11 +139,29 @@ model CmsContent {
   id Int @default(autoincrement()) @id
   title String
   displayOrder Int
-  content String
+  content String @db.Text
   image String @default("")
   status CmsContentStatus
   contentCategoryId Int
   category CmsContentCategory @relation(fields: [contentCategoryId], references: [id])
+  creatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+enum CmsAboutType {
+  ABOUT
+  CONTACT
+}
+
+model CmsAbout {
+  id Int @default(autoincrement()) @id
+  title String
+  content String @db.Text
+  seo String?
+  image String @default("")
+  type CmsAboutType
+  status Boolean @default(true)
   creatorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())

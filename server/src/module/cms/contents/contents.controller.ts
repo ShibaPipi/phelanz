@@ -30,24 +30,25 @@ export class CmsContentController {
 
   @Post()
   async createContent(@Body() data: StoreData): Promise<CmsContent> {
-    return this.cmsContentService.createContent(data);
+    return this.cmsContentService.createCmsContent(data);
   }
 
   @Get()
   async all(
     @ListParams()
-    listParams: Parameters<typeof this.cmsContentService.contents>[0],
+    listParams: Parameters<typeof this.cmsContentService.cmsContents>[0],
     @Res() res: Response,
   ): Promise<void> {
-    const totalCount = await this.cmsContentService.countContents(listParams);
+    const totalCount =
+      await this.cmsContentService.countCmsContents(listParams);
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');
     res.header('X-Total-Count', String(totalCount));
-    res.json(await this.cmsContentService.contents(listParams));
+    res.json(await this.cmsContentService.cmsContents(listParams));
   }
 
   @Get(':id')
   async show(@Param('id') id: string): Promise<CmsContent> {
-    return this.cmsContentService.content({ id: +id });
+    return this.cmsContentService.cmsContent({ id: +id });
   }
 
   @Patch(':id')
@@ -55,7 +56,7 @@ export class CmsContentController {
     @Param('id') id: string,
     @Body() data: StoreData,
   ): Promise<CmsContent> {
-    return this.cmsContentService.updateContent({
+    return this.cmsContentService.updateCmsContent({
       data,
       where: { id: +id },
     });
@@ -63,6 +64,6 @@ export class CmsContentController {
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<CmsContent> {
-    return this.cmsContentService.deleteContent({ id: +id });
+    return this.cmsContentService.deleteCmsContent({ id: +id });
   }
 }
