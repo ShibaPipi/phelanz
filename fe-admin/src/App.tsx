@@ -80,6 +80,7 @@ import {
   CmsContentShow,
   CmsContentStore,
 } from './pages/cms/contents';
+import { CmsAboutList, CmsAboutShow, CmsAboutStore } from './pages/cms/abouts';
 
 function App() {
   const [resources, setResources] = useState<ResourceProps[]>([]);
@@ -111,6 +112,16 @@ function App() {
         meta: {
           label: 'Introductions',
           parent: 'home',
+        },
+      },
+      {
+        name: 'cms_abouts',
+        list: '/cms-abouts',
+        create: '/cms-abouts/create',
+        edit: '/cms-abouts/edit/:id',
+        show: '/cms-abouts/show/:id',
+        meta: {
+          label: 'About',
         },
       },
       {
@@ -294,6 +305,12 @@ function App() {
                         path="show/:id"
                         element={<CmsIntroductionShow />}
                       />
+                    </Route>
+                    <Route path="/cms-abouts">
+                      <Route index element={<CmsAboutList />} />
+                      <Route path="create" element={<CmsAboutStore />} />
+                      <Route path="edit/:id" element={<CmsAboutStore />} />
+                      <Route path="show/:id" element={<CmsAboutShow />} />
                     </Route>
                     <Route path="/cms-banners">
                       <Route index element={<CmsBannerList />} />

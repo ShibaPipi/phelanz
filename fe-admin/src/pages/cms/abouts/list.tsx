@@ -7,23 +7,12 @@ import {
   ShowButton,
   useTable,
 } from '@refinedev/antd';
-import { BaseRecord, useMany, useResource } from '@refinedev/core';
+import { BaseRecord, useResource } from '@refinedev/core';
 import { Image, Space, Table } from 'antd';
 
-export const CmsContentList = () => {
+export const CmsAboutList = () => {
   const { tableProps } = useTable({
     syncWithLocation: true,
-  });
-
-  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
-    resource: 'cms_content_categories',
-    ids:
-      tableProps?.dataSource
-        ?.map((item) => item?.category?.id)
-        .filter(Boolean) ?? [],
-    queryOptions: {
-      enabled: !!tableProps?.dataSource,
-    },
   });
 
   const { resource } = useResource();
@@ -47,17 +36,7 @@ export const CmsContentList = () => {
             return <MarkdownField value={value.slice(0, 80) + '...'} />;
           }}
         />
-        <Table.Column
-          title={'Category'}
-          render={(_, { contentCategoryId }: BaseRecord) =>
-            categoryIsLoading ? (
-              <>Loading...</>
-            ) : (
-              categoryData?.data?.find((item) => item.id === contentCategoryId)
-                ?.name
-            )
-          }
-        />
+        <Table.Column dataIndex="type" title={'Type'} />
         <Table.Column dataIndex="status" title={'Status'} />
         <Table.Column
           dataIndex={['createdAt']}
