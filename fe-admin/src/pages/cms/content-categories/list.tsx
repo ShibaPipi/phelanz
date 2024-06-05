@@ -22,7 +22,7 @@ export const CmsContentCategoryList = () => {
         <Table.Column
           title={'Status'}
           render={(_, { status }: BaseRecord) => (
-            <TagStatusBoolean status={status} />
+            <TagStatusBoolean value={status} />
           )}
         />
         <Table.Column

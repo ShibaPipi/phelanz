@@ -1,15 +1,13 @@
-import {
-  DateField,
-  MarkdownField,
-  NumberField,
-  Show,
-  TextField,
-} from '@refinedev/antd';
+import { Show } from '@refinedev/antd';
 import { useOne, useShow } from '@refinedev/core';
-import { Typography } from 'antd';
-import { ShowCategory, ShowContent, ShowDate, ShowId, ShowStatus, ShowTitle } from 'components';
-
-const { Title } = Typography;
+import {
+  ShowCategory,
+  ShowContent,
+  ShowDate,
+  ShowId,
+  ShowStatus,
+  ShowTitle,
+} from 'components';
 
 export const CmsContentShow = () => {
   const { queryResult } = useShow({});

@@ -7,7 +7,8 @@ import { useMemo } from 'react';
 
 export const CmsContentStore = () => {
   const { id } = useParsed();
-  const { form, formProps, saveButtonProps, formLoading, queryResult } = useForm({});
+  const { form, formProps, saveButtonProps, formLoading, queryResult } =
+    useForm({});
   const { selectProps: categorySelectProps } = useSelect({
     resource: 'cms_content_categories?parentId=0',
     optionLabel: 'name',
