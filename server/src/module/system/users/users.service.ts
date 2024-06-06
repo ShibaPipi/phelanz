@@ -13,7 +13,7 @@ export class SystemUserService {
 
   async systemUser(
     where: Prisma.SystemUserWhereUniqueInput,
-  ): Promise<SystemUser | null> {
+  ): Promise<Omit<SystemUser, 'password'>> {
     return this.prisma.systemUser.findUnique({
       where,
     });
@@ -31,7 +31,7 @@ export class SystemUserService {
     cursor?: Prisma.SystemUserWhereUniqueInput;
     where?: Prisma.SystemUserWhereInput;
     orderBy: Prisma.SystemUserOrderByWithRelationInput;
-  }): Promise<SystemUser[]> {
+  }): Promise<Omit<SystemUser, 'password'>[]> {
     return this.prisma.systemUser.findMany({
       skip,
       take,
@@ -41,9 +41,7 @@ export class SystemUserService {
     });
   }
 
-  async createSystemUser(
-    data: Pick<SystemUser, 'email' | 'name'>,
-  ): Promise<SystemUser> {
+  async createSystemUser(data: Pick<SystemUser, 'email' | 'name'>) {
     return this.prisma.systemUser.create({
       data: {
         ...data,
@@ -61,14 +59,12 @@ export class SystemUserService {
   }: {
     where: Prisma.SystemUserWhereUniqueInput;
     data: Prisma.SystemUserUpdateInput;
-  }): Promise<SystemUser> {
-    return this.prisma.systemUser.update({ data, where });
+  }) {
+    return !!this.prisma.systemUser.update({ data, where });
   }
 
-  async deleteSystemUser(
-    where: Prisma.SystemUserWhereUniqueInput,
-  ): Promise<SystemUser> {
-    return this.prisma.systemUser.delete({ where });
+  async deleteSystemUser(where: Prisma.SystemUserWhereUniqueInput) {
+    return !!this.prisma.systemUser.delete({ where });
   }
 
   async countSystemUsers({
@@ -77,7 +73,7 @@ export class SystemUserService {
   }: {
     cursor?: Prisma.SystemUserWhereUniqueInput;
     where?: Prisma.SystemUserWhereInput;
-  }): Promise<number> {
+  }) {
     return await this.prisma.systemUser.count({
       where,
       cursor,

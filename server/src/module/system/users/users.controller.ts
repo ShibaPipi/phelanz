@@ -20,8 +20,8 @@ export class SystemUserController {
   constructor(private readonly userService: SystemUserService) {}
 
   @Post()
-  async createSystemUser(@Body() userData: StoreData): Promise<SystemUser> {
-    return this.userService.createSystemUser(userData);
+  async createSystemUser(@Body() userData: StoreData) {
+    return !!this.userService.createSystemUser(userData);
   }
 
   @Get()
@@ -29,7 +29,7 @@ export class SystemUserController {
     @ListParams()
     listParams: Parameters<typeof this.userService.systemUsers>[0],
     @Res() res: Response,
-  ): Promise<void> {
+  ) {
     const totalCount = await this.userService.countSystemUsers(listParams);
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');
     res.header('X-Total-Count', `${totalCount}`);
@@ -37,15 +37,12 @@ export class SystemUserController {
   }
 
   @Get(':id')
-  async show(@Param('id') id: string): Promise<SystemUser> {
+  async show(@Param('id') id: string) {
     return this.userService.systemUser({ id: +id });
   }
 
   @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() data: StoreData,
-  ): Promise<SystemUser> {
+  async update(@Param('id') id: string, @Body() data: StoreData) {
     return this.userService.updateSystemUser({
       data,
       where: { id: +id },
@@ -53,7 +50,7 @@ export class SystemUserController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<SystemUser> {
+  async delete(@Param('id') id: string) {
     return this.userService.deleteSystemUser({ id: +id });
   }
 }

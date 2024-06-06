@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { CmsBanner, PrismaClient } from '@prisma/client';
 import { getImageFullUrl } from './common/utils';
+import { map, omit } from 'lodash';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -13,9 +14,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       'CmsContent',
       'CmsAbout',
     ];
-    // add image full url
     this.$use(async (params, next) => {
       const result = await next(params);
+
+      // add image full url
       if (
         modelsHasImage.includes(params.model) &&
         params.action === 'findUnique'
@@ -32,6 +34,16 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
           image_src: banner.image ? getImageFullUrl(banner.image) : null,
         }));
       }
+
+      // omit user password
+      if (params.model === 'SystemUser' && params.action === 'findUnique') {
+        delete result.password;
+        return result;
+      }
+      if (params.model === 'SystemUser' && params.action === 'findMany') {
+        return map(result, (item) => omit(item, ['password']));
+      }
+
       return result;
     });
     // this.$extends({
