@@ -1,4 +1,4 @@
-import { Refine, ResourceProps } from '@refinedev/core';
+import { Authenticated, Refine, ResourceProps } from '@refinedev/core';
 import { DevtoolsPanel, DevtoolsProvider } from '@refinedev/devtools';
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 
@@ -12,6 +12,7 @@ import {
 import '@refinedev/antd/dist/reset.css';
 
 import routerBindings, {
+  CatchAllNavigate,
   DocumentTitleHandler,
   NavigateToResource,
   UnsavedChangesNotifier,
@@ -19,6 +20,7 @@ import routerBindings, {
 import dataProvider from '@refinedev/simple-rest';
 import { App as AntdApp } from 'antd';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { authProvider } from './authProvider';
 import { AppIcon, Header } from './components';
 import { ColorModeContextProvider } from './contexts/color-mode';
 import {
@@ -81,6 +83,7 @@ import {
   CmsContentStore,
 } from './pages/cms/contents';
 import { CmsAboutList, CmsAboutShow, CmsAboutStore } from './pages/cms/abouts';
+import { Login } from './pages/auth';
 
 function App() {
   const [resources, setResources] = useState<ResourceProps[]>([]);
@@ -239,6 +242,7 @@ function App() {
                   ),
                 }}
                 notificationProvider={useNotificationProvider}
+                authProvider={authProvider}
                 routerProvider={routerBindings}
                 resources={[
                   {
@@ -275,19 +279,24 @@ function App() {
                 <Routes>
                   <Route
                     element={
-                      <ThemedLayoutV2
-                        Header={() => <Header sticky />}
-                        Sider={(props) => <ThemedSiderV2 {...props} fixed />}
-                        Title={({ collapsed }) => (
-                          <ThemedTitleV2
-                            collapsed={collapsed}
-                            text="Phelanz"
-                            icon={<AppIcon />}
-                          />
-                        )}
+                      <Authenticated
+                        key="authenticated-inner"
+                        fallback={<CatchAllNavigate to="/login" />}
                       >
-                        <Outlet />
-                      </ThemedLayoutV2>
+                        <ThemedLayoutV2
+                          Header={() => <Header sticky />}
+                          Sider={(props) => <ThemedSiderV2 {...props} fixed />}
+                          Title={({ collapsed }) => (
+                            <ThemedTitleV2
+                              collapsed={collapsed}
+                              text="Phelanz"
+                              icon={<AppIcon />}
+                            />
+                          )}
+                        >
+                          <Outlet />
+                        </ThemedLayoutV2>
+                      </Authenticated>
                     }
                   >
                     <Route
@@ -382,6 +391,23 @@ function App() {
                       <Route path="show/:id" element={<FitRecipeShow />} />
                     </Route>
                     <Route path="*" element={<ErrorComponent />} />
+                  </Route>
+                  <Route
+                    element={
+                      <Authenticated
+                        key="authenticated-outer"
+                        fallback={<Outlet />}
+                      >
+                        <NavigateToResource />
+                      </Authenticated>
+                    }
+                  >
+                    <Route path="/login" element={<Login />} />
+                    {/* <Route path="/register" element={<Register />} /> */}
+                    {/* <Route
+                      path="/forgot-password"
+                      element={<ForgotPassword />}
+                    /> */}
                   </Route>
                 </Routes>
 
