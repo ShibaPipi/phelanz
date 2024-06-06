@@ -1,18 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, SystemUser } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class UserService {
-  constructor(private prisma: PrismaService) {}
+export class SystemUserService {
+  constructor(
+    private configService: ConfigService,
+    private prisma: PrismaService,
+  ) {}
 
-  async user(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
-    return this.prisma.user.findUnique({
+  async systemUser(
+    where: Prisma.SystemUserWhereUniqueInput,
+  ): Promise<SystemUser | null> {
+    return this.prisma.systemUser.findUnique({
       where,
     });
   }
 
-  async users({
+  async systemUsers({
     skip,
     take,
     cursor,
@@ -21,11 +28,11 @@ export class UserService {
   }: {
     skip?: number;
     take?: number;
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
-    orderBy: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
-    return this.prisma.user.findMany({
+    cursor?: Prisma.SystemUserWhereUniqueInput;
+    where?: Prisma.SystemUserWhereInput;
+    orderBy: Prisma.SystemUserOrderByWithRelationInput;
+  }): Promise<SystemUser[]> {
+    return this.prisma.systemUser.findMany({
       skip,
       take,
       cursor,
@@ -34,32 +41,44 @@ export class UserService {
     });
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({ data });
+  async createSystemUser(
+    data: Pick<SystemUser, 'email' | 'name'>,
+  ): Promise<SystemUser> {
+    return this.prisma.systemUser.create({
+      data: {
+        ...data,
+        password: await bcrypt.hash(
+          this.configService.get<string>('INIT_PWD'),
+          10,
+        ),
+      },
+    });
   }
 
-  async updateUser({
+  async updateSystemUser({
     data,
     where,
   }: {
-    where: Prisma.UserWhereUniqueInput;
-    data: Prisma.UserUpdateInput;
-  }): Promise<User> {
-    return this.prisma.user.update({ data, where });
+    where: Prisma.SystemUserWhereUniqueInput;
+    data: Prisma.SystemUserUpdateInput;
+  }): Promise<SystemUser> {
+    return this.prisma.systemUser.update({ data, where });
   }
 
-  async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.delete({ where });
+  async deleteSystemUser(
+    where: Prisma.SystemUserWhereUniqueInput,
+  ): Promise<SystemUser> {
+    return this.prisma.systemUser.delete({ where });
   }
 
-  async countUsers({
+  async countSystemUsers({
     cursor,
     where,
   }: {
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
+    cursor?: Prisma.SystemUserWhereUniqueInput;
+    where?: Prisma.SystemUserWhereInput;
   }): Promise<number> {
-    return await this.prisma.user.count({
+    return await this.prisma.systemUser.count({
       where,
       cursor,
     });

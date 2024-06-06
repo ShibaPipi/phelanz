@@ -8,52 +8,52 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { UserService } from './users.service';
-import { User } from '@prisma/client';
+import { SystemUserService } from './users.service';
+import { SystemUser } from '@prisma/client';
 import { ListParams } from 'src/common/decorators';
 import { Response } from 'express';
 
+type StoreData = Pick<SystemUser, 'email' | 'name'>;
+
 @Controller('system_users')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class SystemUserController {
+  constructor(private readonly userService: SystemUserService) {}
 
   @Post()
-  async createUser(
-    @Body() userData: Pick<User, 'email' | 'name'>,
-  ): Promise<User> {
-    return this.userService.createUser(userData);
+  async createSystemUser(@Body() userData: StoreData): Promise<SystemUser> {
+    return this.userService.createSystemUser(userData);
   }
 
   @Get()
   async all(
     @ListParams()
-    listParams: Parameters<typeof this.userService.users>[0],
+    listParams: Parameters<typeof this.userService.systemUsers>[0],
     @Res() res: Response,
   ): Promise<void> {
-    const totalCount = await this.userService.countUsers(listParams);
+    const totalCount = await this.userService.countSystemUsers(listParams);
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');
     res.header('X-Total-Count', `${totalCount}`);
-    res.json(await this.userService.users(listParams));
+    res.json(await this.userService.systemUsers(listParams));
   }
 
   @Get(':id')
-  async show(@Param('id') id: string): Promise<User> {
-    return this.userService.user({ id: +id });
+  async show(@Param('id') id: string): Promise<SystemUser> {
+    return this.userService.systemUser({ id: +id });
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: Pick<User, 'email' | 'name'>,
-  ): Promise<User> {
-    return this.userService.updateUser({
+    @Body() data: StoreData,
+  ): Promise<SystemUser> {
+    return this.userService.updateSystemUser({
       data,
       where: { id: +id },
     });
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<User> {
-    return this.userService.deleteUser({ id: +id });
+  async delete(@Param('id') id: string): Promise<SystemUser> {
+    return this.userService.deleteSystemUser({ id: +id });
   }
 }
