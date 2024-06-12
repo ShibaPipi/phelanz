@@ -107,11 +107,21 @@ model CmsBanner {
   updatedAt DateTime @updatedAt @default(now())
 }
 
+enum CmsIntroductionButtonTarget {
+  SELF
+  BLANK
+}
+
 model CmsIntroduction {
   id Int @default(autoincrement()) @id
   title String
   image String @default("")
   description String
+  tag String?
+  button Boolean @default(false)
+  buttonText String?
+  buttonHref String?
+  buttonTarget CmsIntroductionButtonTarget
   status Boolean @default(true)
   creatorId Int
   createdAt DateTime @default(now())
