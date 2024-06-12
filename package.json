@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:fe-admin": "cd ./fe-admin && pnpm dev",
+    "dev:admin": "cd ./fe-admin && pnpm dev",
+    "dev:client": "cd ./fe-client && pnpm dev",
     "debug:server": "cd ./server && pnpm start:debug",
     "prepare": "husky install",
     "commit": "cz"
