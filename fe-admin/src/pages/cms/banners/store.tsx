@@ -26,14 +26,14 @@ export const CmsBannerStore = () => {
           }
           onRemove={() => form.setFieldValue('image', '')}
         />
-        <Form.Item label={'Name'} name={['name']}>
+        <Form.Item label={'Title'} name={['title']}>
           <Input />
         </Form.Item>
         <Form.Item label={'URL'} name={['url']}>
           <Input />
         </Form.Item>
         <Form.Item label={'Description'} name={['description']}>
-          <Input />
+          <Input.TextArea rows={2} />
         </Form.Item>
         <Form.Item
           label={'Status'}

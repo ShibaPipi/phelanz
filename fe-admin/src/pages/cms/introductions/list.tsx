@@ -27,6 +27,10 @@ export const CmsIntroductionList = () => {
           )}
         />
         <Table.Column
+          title={'Button'}
+          render={(_, { button }: BaseRecord) => (button ? 'True' : 'False')}
+        />
+        <Table.Column
           title={'Status'}
           render={(_, { status }: BaseRecord) => (
             <TagStatusBoolean value={status} />
