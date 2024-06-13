@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Image from 'next/image';
+import { ImagePlaceholder } from './ImagePlaceholder';
 
 interface Props {
   type: 'about' | 'contact';
@@ -16,7 +17,7 @@ export const AboutOrContact: FC<Props> = ({ type }) => {
           </h1>
           <div className="sm:mx-0">
             <div className="block overflow-hidden relative box-border m-0">
-              <div className="block box-border" style={{ paddingTop: '50%' }} />
+              <ImagePlaceholder />
               <Image
                 alt={title}
                 width="800"

@@ -1,7 +1,7 @@
 'use client';
 
+import { contents } from '@/lib/models';
 import Image from 'next/image';
-import { contents } from '../page';
 
 export default function Page({ params }: { params: { id: string } }) {
   const content = contents.find((item) => item.id === +params.id);
