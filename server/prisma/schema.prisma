@@ -121,7 +121,7 @@ model CmsIntroduction {
   button Boolean @default(false)
   buttonText String?
   buttonHref String?
-  buttonTarget CmsIntroductionButtonTarget
+  buttonTarget CmsIntroductionButtonTarget?
   status Boolean @default(true)
   creatorId Int
   createdAt DateTime @default(now())

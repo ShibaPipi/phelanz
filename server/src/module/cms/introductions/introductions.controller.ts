@@ -9,9 +9,10 @@ import {
   Res,
 } from '@nestjs/common';
 import { CmsIntroductionService } from './introductions.service';
-import { CmsIntroduction } from '@prisma/client';
+import { CmsIntroduction, CmsIntroductionButtonTarget } from '@prisma/client';
 import { ListParams } from 'src/common/decorators';
 import { Response } from 'express';
+import { RefineSelectOption } from 'src/common/types';
 
 type StoreData = Omit<CmsIntroduction, 'id' | 'createdAt' | 'updatedAt'>;
 
@@ -20,6 +21,14 @@ export class CmsIntroductionController {
   constructor(
     private readonly cmsIntroductionService: CmsIntroductionService,
   ) {}
+
+  @Get('/buttonTargets')
+  async buttonTargets(): Promise<RefineSelectOption[]> {
+    return Object.values(CmsIntroductionButtonTarget).map((value) => ({
+      id: value,
+      title: value,
+    }));
+  }
 
   @Post()
   async createIntroduction(@Body() data: StoreData): Promise<CmsIntroduction> {
